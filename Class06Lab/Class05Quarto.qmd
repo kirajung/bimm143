@@ -1,0 +1,36 @@
+---
+title: "Class05Lab Class 05: Data Visualization with GGPLOT"
+author: "Kira Jung (PID: A16026398)"
+format: pdf
+---
+
+## Week 4 Data Visulization Lab
+
+## Question 1
+> For which phases is data visualization important in our scientific workflows?
+
+Answer: All of the above (Communication of Results, Exploratory Data Analysis, Detection of outliers).
+
+## Question 2
+> True or False? The ggplot2 package comes already installed with R?
+
+Answer: FALSE.
+
+
+
+Install the package ggplot2
+
+```{r}
+install.packages("ggplot2")
+library(ggplot2)
+View(cars)
+plot(cars)
+ggplot(data=cars) + aes(x=speed, y=dist) + geom_point()
+```
+
+
+
+ Week 4 Data Visualization Lab
+
+# Install the package ggplot2
+# install.packages("ggplot2")

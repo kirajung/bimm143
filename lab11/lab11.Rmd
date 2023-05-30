@@ -1,0 +1,55 @@
+---
+title: "BIMM 143 Lab 11"
+author: "Kira Jung"
+date: "2023-05-23"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Section 1. Proportion of G/G in a population
+
+Downloaded a CSV file from Ensemble < https://useast.ensembl.org/Homo_sapiens/Variation/Sample?db=core;r=17:39943114-39973115;v=rs8067378;vdb=variation;vf=105535077#373531_tablePanel >
+
+Read the CSV file
+
+```{r}
+mxl <- read.csv("373531-SampleGenotypes-Homo_sapiens_Variation_Sample_rs8067378 (3).csv")
+head(mxl)
+```
+
+```{r}
+table(mxl$Genotype..forward.strand.)
+```
+
+```{r}
+table(mxl$Genotype..forward.strand.) / nrow(mxl) * 100
+```
+
+The proportion of MXL homozygous for the asthma associated SNP G|G is 14.1%
+
+Now looking at a different population, GBR.
+
+```{r}
+gbr <- read.csv("373522-SampleGenotypes-Homo_sapiens_Variation_Sample_rs8067378.csv")
+```
+
+Find proportion of G|G
+
+```{r}
+table(gbr$Genotype..forward.strand.) / nrow(gbr) * 100
+```
+
+The percentage of G|G in great britain population is 29.7%, so it is more frequent in GBR than MXL population.
+
+
+
+
+
+
+
+
+
+

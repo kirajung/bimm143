@@ -1,0 +1,27 @@
+---
+title: "Class 14 GitHub"
+author: "Kira Jung"
+date: "2023-05-30"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Connecting RStudio to GitHub
+
+Creating a personal access token, after installing "use this".
+
+```{r}
+library(usethis)
+create_github_token()
+```
+
+After creating a PAT, now storing it:
+
+```{r}
+library(gitcreds)
+gitcreds_set()
+```
+

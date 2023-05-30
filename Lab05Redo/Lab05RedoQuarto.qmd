@@ -1,0 +1,59 @@
+---
+title: "Class 05: Data Visualization with ggplot2"
+author: "Kira Jung (PID: A16026398)"
+format: html
+---
+
+### Question 1
+> For which phases is data visualization important in our scientific workflows?
+
+Answer: **All of the above** (Communication of results, EDA, detection of outliers).
+
+### Question 2
+> True or False? The ggplot2 package comes already installed with R?
+
+Answer: **FALSE**.
+
+### Question 3
+> Which plot types are typically NOT used to compare distributions of numeric variables?
+
+Answer: **Network graphs**.
+
+### Question 4
+> Which statement about data visualization with ggplot2 is incorrect?
+
+Answer: "ggplot2 is the only way to create plots in R"
+
+## Creating Plots (cars example)
+First load the package and specify the dataset to be used as an argument.
+> library (ggplot2), ggplot(cars), View(cars)
+
+Create a basic plot
+
+```{r}
+plot(cars)
+```
+
+We can also specify aes and geom layers
+
+```{r}
+ggplot(data=cars) + aes(x=speed, y=dist) + geom_point()
+```
+
+We can add a line geom with geom_line()
+
+```{r}
+p <- ggplot(data=cars) + aes(x=speed, y=dist) + geom_point()
+
+p + geom_line()
+
+p + geom_smooth(method="lm")
+
+```
+
+## Read in our drug expression data
+url <- "https://bioboot.github.io/bimm143_S20/class-material/up_down_expression.txt"
+genes <- read.delim(url)
+head(genes)
+View(genes)
+

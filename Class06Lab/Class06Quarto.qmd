@@ -1,0 +1,304 @@
+---
+title: "Class 05: Data Visualization with GGPLOT"
+author: "Kira Jung (PID: A16026398)"
+format: html
+---
+
+
+## Week 3 Data Visulization With ggplot2
+
+Install packages with install.package("ggplot2") and library(ggplot2).
+
+## Question 1
+> For which phases is data visualization important in our scientific workflows?
+
+Answer: All of the above (Communication of Results, Exploratory Data Analysis, Detection of outliers).
+
+## Question 2
+> True or False? The ggplot2 package comes already installed with R?
+
+Answer: FALSE.
+
+## Question 3
+> Which plot types are typically NOT used to compare distributions of numeric variables?
+
+Answer: Network graphs
+
+## Question 4
+> Which statement about data visualization with ggplot2 is incorrect?
+
+Answer: "ggplot2 is the only way to create plots in R".
+
+# Section 6: Creating Scatter Plots
+
+```{r}
+library(ggplot2)
+View(cars)
+plot(cars)
+ggplot(data=cars) + aes(x=speed, y=dist) + geom_point()
+p <- ggplot(data=cars) + aes(x=speed, y=dist) + geom_point()
+
+```
+
+We can add a line geom with geom_line() or a trendline close to the data with geom_smooth().
+
+```{r}
+p + geom_line()
+p + geom_smooth()
+p + geom_smooth(method="lm")
+```
+
+## Question 5
+> Which geometric layer should be used to create scatter plots in ggplot2?
+
+Answer: geom_point().
+
+## Question 6
+> In your own RStudio can you add a trend line layer to help show the relationship between the plot variables with the geom_smooth() function?
+
+Answer:
+```{r}
+ggplot(cars) + aes(x=speed, y=dist) + geom_point() + geom_smooth()
+```
+
+## Question 7 
+> Argue with geom_smooth() to add a straight line from a linear model without the shaded standard error region?
+
+Answer:
+```{r}
+ggplot(cars) + aes(x=speed, y=dist) + geom_point() + geom_smooth(method="lm", se=FALSE)
+```
+
+## Question 8
+> Can you finish this plot by adding various label annotations with the labs() function and changing the plot look to a more conservative “black & white” theme by adding the theme_bw() function:
+
+Answer:
+```{r}
+ggplot(cars) + aes(x=speed, y=dist) + geom_point() + labs(title="Speed and Stopping Distances of Cars", x="Speed (MPH)", y="Stopping Distance (ft)", subtitle="The speed of cars in mph as they stop (distance in ft).", caption="Dataset: 'cars'") + geom_smooth(method="lm", se=FALSE) + theme_bw()
+```
+
+Reading in the expression data:
+
+```{r}
+url <- "https://bioboot.github.io/bimm143_S20/class-material/up_down_expression.txt"
+genes <- read.delim(url)
+head(genes)
+View(genes)
+```
+
+## Question 9
+> Use the nrow() function to find out how many genes are in this dataset. What is your answer?
+
+```{r}
+nrow(genes)
+```
+
+Answer: There are 5196 genes in this dataset.
+
+## Question 10
+> Use the colnames() function and the ncol() function on the genes data frame to find out what the column names are (we will need these later) and how many columns there are. How many columns did you find?
+
+```{r}
+colnames(genes)
+ncol(genes)
+```
+Answer: There are four columns: Gene, Condition1, Condition2, and State.
+
+## Question 11
+> Use the table() function on the State column of this data.frame to find out how many ‘up’ regulated genes there are. What is your answer?
+
+```{r}
+table(genes$State)
+```
+
+Answer: There are 127 upregulated genes.
+
+## Question 12
+> Using your values above and 2 significant figures. What fraction of total genes is up-regulated in this dataset?
+
+```{r}
+round((table(genes$State) / nrow(genes)) * 100, 2)
+```
+
+Answer: Using 2 significant figures, the fraction of upregulated genes in the dataset is 2.4
+
+## Question 13
+> Complete the code to produce the plot.
+
+```{r}
+ggplot(genes) + aes(x=Condition1, y=Condition2) + geom_point()
+```
+
+Creating a new plot with color according to State:
+
+```{r}
+
+g <- ggplot(data=genes) + aes(x=Condition1, y=Condition2, col=State) + geom_point()
+```
+
+Adding color and plot annotations:
+
+```{r}
+g + scale_color_manual(values=c("blue", "gray", "red")) + labs(title="Gene expression changes", x="Control(No Drug)", y="Condition 2 (Drug Treatment)") + theme_bw()
+```
+
+# Section 7 - Going Further
+
+Install the gapminder package using install.packages("gapminder") and library(gapminder). 
+
+```{r}
+install.packages("gapminder")
+library(gapminder)
+```
+
+```{r}
+url <- "https://raw.githubusercontent.com/jennybc/gapminder/master/inst/extdata/gapminder.tsv"
+
+gapminder <- read.delim(url)
+```
+
+Install dplyr package and make new variable gapminder_2007 with install.packages("dplyr") and library(dplyr).
+
+```{r}
+gapminder_2007 <- gapminder %>% filter(year==2007)
+```
+
+## Question 14
+> Complete the code below to produce a first basic scater plot of this gapminder_2007 dataset:
+
+```{r}
+ggplot(gapminder_2007) + aes(x=gdpPercap, y=lifeExp) + geom_point(alpha=0.4)
+```
+
+An alpha=0.4 argument can be added to make the points slightly transparent.
+
+A richer plot can be made including four different variables and sorted by population colors.
+
+```{r}
+ggplot(gapminder_2007) + aes(x=gdpPercap, y=lifeExp, color=continent, size=pop) + geom_point(alpha=0.5)
+```
+
+Alternatively, the points can be colored by numeric variable 'population pop'.
+
+```{r}
+ggplot(gapminder_2007) + aes(x=gdpPercap, y=lifeExp, color=pop) + geom_point(alpha=0.8)
+```
+
+The point size can also be adjusted to be based on the population of each country.
+
+```{r}
+ggplot(gapminder_2007) + aes(x=gdpPercap, y=lifeExp, size=pop) + geom_point(alpha=0.5)
+```
+
+To reflect the actual population differences by the point size, we can scale the size area.
+
+```{r}
+ggplot(gapminder_2007) + geom_point(aes(x=gdpPercap, y=lifeExp, size=pop), alpha=0.5) + scale_size_area(max_size=10)
+```
+
+## Question 15
+> Can you adapt the code you have learned thus far to reproduce our gapminder scatter plot for the year 1957? What do you notice about this plot is it easy to compare with the one for 2007?
+
+```{r}
+gapminder_1957 <- gapminder %>% filter(year==1957 | year==2007)
+ggplot(gapminder_1957) + geom_point(aes(x=gdpPercap, y=lifeExp, color=continent, size=pop), alpha=0.7) + scale_size_area(max_size=10) + facet_wrap(~year)
+
+```
+
+# Section 8: Bar Charts
+
+```{r}
+gapminder_top5 <- gapminder %>% 
+  filter(year==2007) %>% 
+  arrange(desc(pop)) %>% 
+  top_n(5, pop)
+
+gapminder_top5
+```
+
+A simple bar chart can be created by using the geom_col() layer.
+
+```{r}
+ggplot(gapminder_top5) + 
+  geom_col(aes(x = country, y = pop))
+```
+
+## Question 16
+> Create a bar chart showing the life expectancy of the five biggest countries by population in 2007.
+
+```{r}
+ggplot(gapminder_top5) + geom_col(aes(x=country, y=lifeExp))
+```
+
+## Question 17
+> Plot population size by country. Create a bar chart showing the population (in millions) of the five biggest countries by population in 2007.
+
+```{r}
+ggplot(gapminder_top5) + geom_col(aes(x=reorder(country, -pop), y=pop, fill=country, col="gray30", fill="none"))
+```
+
+Bar charts can be flipped to enable a more clear visualization by using coord_flip().geom_point() and geom_segment() can be combined to make the chart more visually appealing and less crowded.
+
+```{r}
+head(USArrests)
+ggplot(USArrests) +
+  aes(x=reorder(State,Murder), y=Murder) +
+  geom_point() +
+  geom_segment(aes(x=State, 
+                   xend=State, 
+                   y=0, 
+                   yend=Murder), color="blue") +
+  coord_flip()
+```
+
+# Section 9 - Animation
+
+First install the gganimate and gifski package.
+
+```{r}
+library(gapminder)
+library(gganimate)
+```
+
+Then set up the ggplot of gapminder data to make animated gifs.
+
+```{r}
+ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, colour = country)) +
+  geom_point(alpha = 0.7, show.legend = FALSE) +
+  scale_colour_manual(values = country_colors) +
+  scale_size(range = c(2, 12)) +
+  scale_x_log10() + facet_wrap(~continent) + labs(title = 'Year: {frame_time}', x = 'GDP per capita', y = 'life expectancy') +
+  transition_time(year) +
+  shadow_wake(wake_length = 0.1, alpha = FALSE)
+```
+
+# Section 10 - Combining Plots
+
+Use the patchwork package to combine plots and make an all-in-one multi-panel figure.
+
+First get the package:
+
+```{r}
+library(patchwork)
+```
+
+Then set up some example plots:
+
+```{r}
+p1 <- ggplot(mtcars) + geom_point(aes(mpg, disp))
+p2 <- ggplot(mtcars) + geom_boxplot(aes(gear, disp, group = gear))
+p3 <- ggplot(mtcars) + geom_smooth(aes(disp, qsec))
+p4 <- ggplot(mtcars) + geom_bar(aes(carb))
+```
+
+Lastly, use the patchwork package to combine them.
+
+```{r}
+(p1 | p2 | p3) / p4
+```
+
+# About this document
+
+```{r}
+sessionInfo()
+```
