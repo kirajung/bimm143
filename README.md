@@ -3,5 +3,21 @@ This is my repository for my Bioinformatics class from UC San Diego in SP23.
 
 ## Index of Material
 *Introductory Material: Working With R*
+- Class 3 - [Advanced Sequence Alignment and Database Searching](https://github.com/kirajung/bimm143_kira_sp23/blob/83f519467508eb3e7e736a9d481d00d6448a7ab1/week03/week03.R%20PDF.pdf)
+- Class 4 - [Bioinformatics Data Analysis with R]
 - Class 5 - [Data Exploration and Visualization in R](https://github.com/kirajung/bimm143_kira_sp23/tree/3881f005c2167f5b8de1296de886ea40c5fd6e8b/Class05Lab)
 - Class 6 - [R Functions](Class06Lab/Class06LabQuarto.Rmd)
+- Class 7 - [Hands on with Principal Component Analysis (PCA)]
+- Class 8 - [Learning Analysis of Human Breast Cancer Cells (PCA)]
+- Class 9 - [Structural Bioinformatics, PDB, PCA]
+- Class 10 - [Exploratory Analysis of Halloween Candy in R]
+- Class 11 - [Introduction to Genome Informatics Lab]
+- Class 12 - [Transcriptomics and the Analysis of RNA-Seq Data]
+- Class 13 - [RNA-Seq Analysis Mini-Project]
+- Class 14 - [Introduction to Git and GitHub]
+- Class 15 - [Essential UNIX for bioinformatics, AWS EC2]
+- Class 16 - [Analyzing Sequencing Data in the Cloud: Obtaining and Processing SRA Datasets on AWS]
+- Class 17 - [COVID-19 Vaccination Rates with R]
+- Class 18 - [Mutational Signatures in Human Cancer]
+- Class 19 - [Investigating Pertussis Resurgence with CMI-PB]
+- (PROJECT) Find-a-gene Assignment
