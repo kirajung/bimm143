@@ -11,10 +11,10 @@ This is my repository for my Bioinformatics class from UC San Diego in SP23.
 - Class 8 - [Learning Analysis of Human Breast Cancer Cells (PCA)]
 - Class 9 - [Structural Bioinformatics, PDB, PCA]
 - Class 10 - [Exploratory Analysis of Halloween Candy in R]
-- Class 11 - [Introduction to Genome Informatics Lab]
+- Class 11 - [Introduction to Genome Informatics Lab](https://github.com/kirajung/bimm143_kira_sp23/blob/4cb8020be1e57877bbd6c4682362b5b17d1138d9/lab11/lab11.Rmd)
 - Class 12 - [Transcriptomics and the Analysis of RNA-Seq Data]
-- Class 13 - [RNA-Seq Analysis Mini-Project]
-- Class 14 - [Introduction to Git and GitHub]
+- Class 13 - [RNA-Seq Analysis Mini-Project](https://github.com/kirajung/bimm143_kira_sp23/blob/4cb8020be1e57877bbd6c4682362b5b17d1138d9/class13/class13.Rmd)
+- Class 14 - [Introduction to Git and GitHub](https://github.com/kirajung/bimm143_kira_sp23/blob/4cb8020be1e57877bbd6c4682362b5b17d1138d9/class14/class14.Rmd)
 - Class 15 - [Essential UNIX for bioinformatics, AWS EC2]
 - Class 16 - [Analyzing Sequencing Data in the Cloud: Obtaining and Processing SRA Datasets on AWS]
 - Class 17 - [COVID-19 Vaccination Rates with R]
