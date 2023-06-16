@@ -1,0 +1,287 @@
+---
+title: "Class 12: Transcriptomics and Analysis of RNA-Seq Data"
+author: "Kira Jung"
+date: "2023-06-10"
+output:
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 1. Bioconductor and DESeq2 setup
+
+First installed the core Bioconductor packages. Then, installed the DESeq2 bioconductor package.
+
+After installing, the packages should then be able to load.
+
+```{r}
+library(BiocManager)
+library(DESeq2)
+```
+
+# 2. Import countData and colData
+
+Using airway_scaledcounts.csv and airway_metadata.csv from the course website:
+
+```{r}
+counts <- read.csv("airway_scaledcounts.csv", row.names = 1)
+metadata <-  read.csv("airway_metadata.csv")
+```
+
+Now viewing each of the datasets:
+
+```{r}
+head(counts)
+```
+
+```{r}
+head(metadata)
+```
+
+**Q1**: How many genes are in this dataset (metadata)?
+
+```{r}
+nrow(counts)
+```
+
+*Answer*: There are 38694 genes in the dataset.
+
+**Q2**: How many 'control' cell lines do we have?
+
+```{r}
+n.control <- sum(metadata$dex == "control")
+```
+
+*Answer*: There are 4 control cell lines.
+
+# 3. Toy Differential Gene Expression
+*Analysis is for demonstration only*
+
+First seeing which samples in the metadata are 'control' and which are drug 'treated'. Then calculating the mean counts per gene across the samples:
+
+```{r}
+control <- metadata[metadata$dex == "control", ]
+control.counts <- counts[ , control$id]
+control.mean <- rowMeans(control.counts)
+head(control.mean)
+```
+
+**Alternatively**, this can be done using the dplyr package from tidyverse.
+
+```{r}
+library(dplyr)
+control <- metadata %>% filter(dex == "control")
+control.counts <- counts %>% select(control$id) 
+control.mean <- rowSums(control.counts) / 4
+head(control.mean)
+```
+
+**Q3**: How would you make the above code in either approach more robust?
+
+*Answer*: This can be done by isolating the 'control' column in the `counts` dataset. The mean value for each gene can be determined with `rowMeans()`. 
+
+First, isolating 'control':
+
+```{r}
+control.inds <- metadata$dex == "control"
+control <- metadata[control.inds, ]
+control$id
+```
+
+```{r}
+control.counts <- counts[ , control$id]
+head(control.counts)
+```
+
+And then determining the mean for each gene:
+
+```{r}
+control.mean <- rowMeans(control.counts)
+head(control.mean)
+```
+
+**Q4**: Follow the same procedure for the treated samples (i.e. calculate the mean per gene across drug treated samples and assign to a labeled vector called treated.mean)
+
+Extract and summarize the drug 'treated' samples:
+
+```{r}
+treated <- metadata[metadata$dex == "treated", ]
+treated.counts <- counts[, treated$id]
+treated.mean <- rowMeans(treated.counts)
+head(treated.mean)
+```
+
+We will combine our meancount data for bookkeeping purposes.
+
+```{r}
+meancounts <- data.frame(control.mean, treated.mean)
+```
+
+`colSums()` the data to show the sum of the mean counts across all genes for each group.
+
+```{r}
+colSums(meancounts)
+```
+
+**Q5(a)**: Create a scatter plot showing the mean of the treated samples against the mean of the control samples.
+
+```{r}
+plot(meancounts[ , 1], meancounts[ , 2], xlab = "Control", ylab = "Treated")
+```
+
+**Q5(b)**: You could also use the ggplot2 package to make this figure producing the plot below. What geom_?() function would you use for this plot?
+
+*Answer*: geom_point() would be used for this plot.
+
+```{r}
+library(ggplot2)
+
+ggplot(meancounts) + aes(control.mean, treated.mean) + geom_point()
+```
+
+**Q6**: Try plotting both axes on a log scale. What is the argument to plot() that allows you to do this?
+
+*Answer*: the 'log' argument.
+
+```{r}
+plot(meancounts[ , 1], meancounts[ , 2], log = "xy", xlab = "log control counts", ylab = "log of treated counts")
+```
+
+We can find candidate differentially expressed genes by looking for genes with a large change between control and dex-treated samples. The log2 of the fold change has better mathematical properties.
+
+Calculate log2foldchange and add it to the meancounts data.frame:
+
+```{r}
+meancounts$log2fc <- log2(meancounts$treated.mean / meancounts$control.mean)
+
+head(meancounts)
+```
+
+NaN is returned when you divide by zero and try to take the log. The -Inf is returned when you try to take the log of zero.
+
+Filter the data to remove those genes:
+
+```{r}
+zero.vals <- which(meancounts[ , 1:2] == 0, arr.ind = TRUE)
+
+to.rm <- unique(zero.vals[ , 1])
+mycounts <- meancounts[-to.rm, ]
+```
+
+```{r}
+head(mycounts)
+```
+
+**Q7**: What is the purpose of the arr.ind argument in the which() function call above? Why would we then take the first column of the output and need to call the unique() function?
+
+*Answer*: `arr.ind = TRUE` causes which() to return both the row and column indices where there are TRUE values. Therefore, we know which genes (rows) and samples (columns) have zero counts. We take the first column of the output to exclude genes with zero counts in any sample - so we only want rows, not columns. unique() ensures we don't count a row twice if it has a zero count in both samples.
+
+A common threshold used for calling something differentially expressed is a log2(FoldChange) of greater than 2 or less than -2. 
+
+**Let’s filter the dataset both ways to see how many genes are up or down-regulated.**
+
+```{r}
+up.ind <- mycounts$log2fc > 2
+down.ind <- mycounts$log2fc < (-2)
+```
+
+**Q8**: Using the up.ind vector above can you determine how many up regulated genes we have at the greater than 2 fc level?
+
+```{r}
+sum(up.ind)
+```
+
+*Answer*: There are 250 up regulated genes at greater than 2 fc level.
+
+**Q9**: Using the down.ind vector above can you determine how many down regulated genes we have at the greater than 2 fc level
+
+```{r}
+sum(down.ind)
+```
+
+*Answer*: There are 367 down regulated genes at greater than 2 fc level.
+
+**Q10**: Do you trust these results? Why or why not?
+
+*Answer*: Not fully because we don't know yet if these changes are significant.
+
+
+# 4. DESeq2 Analysis
+
+First loading the package:
+
+```{r}
+library(DESeq2)
+citation("DESeq2")
+```
+
+## Importing Data
+DESeq works on a particular type of object called a DESeqDataSet. The DESeqDataSet is a single object that contains input values, intermediate calculations like how things are normalized, and all results of a differential expression analysis.
+
+We will use the DESeqDataSetFromMatrix() function to build the required DESeqDataSet object and call it dds, short for our DESeqDataSet:
+
+```{r}
+dds <- DESeqDataSetFromMatrix(countData = counts, colData = metadata, design=~dex)
+
+dds
+```
+
+## DESeq Analysis
+The DESeq() function takes a DESeqDataSet and returns a DESeqDataSet, but with additional information filled in (including the differential expression results we are after). If we try to access these results before running the analysis, nothing exists.
+
+Here we are running the DESeq pipeline on the dds object, and reassigning the whole thing back to dds, which will now be a DESeqDataSet populated with all those values. 
+
+```{r}
+dds <- DESeq(dds)
+```
+
+## Getting results
+
+We can get results out of the object simply by calling the results() function on the DESeqDataSet that has been run through the pipeline.
+
+```{r}
+res <- results(dds)
+res
+```
+
+Convert the res object to a data.frame with the as.data.frame() function and then pass it to View() to bring it up in a data viewer
+
+```{r include=FALSE}
+as.data.frame(res)
+View(as.data.frame(res))
+```
+
+We can summarize some basic tallies using the summary function.
+
+```{r}
+summary(res)
+```
+
+By default the argument alpha is set to 0.1. If the adjusted p value cutoff will be a value other than 0.1, alpha should be set to that value:
+
+```{r}
+res05 <- results(dds, alpha = 0.05)
+summary(res05)
+```
+
+# 5. Adding Annotation Data
+
+We will use one of Bioconductor’s main annotation packages to help with mapping between various ID schemes. Here we load the AnnotationDbi package and the annotation data package for humans org.Hs.eg.db.
+
+```{r}
+library("AnnotationDbi")
+library("org.Hs.eg.db")
+```
+
+To get a list of all available key types that we can use to map between, use the columns() function:
+
+```{r}
+columns(org.Hs.eg.db)
+```
+
+```{r}
+sessionInfo()
+```
+
