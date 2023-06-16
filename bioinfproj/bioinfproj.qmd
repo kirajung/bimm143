@@ -1,0 +1,216 @@
+---
+title: "BIMM 143 Find-A-Gene Project"
+author: "Kira Jung"
+format: html
+---
+
+Date: 2023-06-15
+
+## Q1.
+Name: Retinol binding protein 4 (RBP4) isoform b
+Accession:  NP_001310447
+Species: Homo Sapiens
+
+## Q2.
+Method: TBLASTN (2.7.1) search against fish ESTs
+Database: Expressed Sequence Tags (est)
+Organism: fish (Taxis: 7898)
+
+```{r}
+knitr::include_graphics("Q2_1.png")
+```
+
+```{r}
+knitr::include_graphics("Q2_2.png")
+```
+
+```{r}
+knitr::include_graphics("Q2_3.png")
+```
+
+## Q3.
+Chosen sequence: 
+CN976133.1 26058_125_035_F12 Fundulus Heteroclitus Liver Fundulus heteroclitus cDNA similar to Plasma retinol-binding protein I (PRBP-I), mRNA sequence
+TGCAGTGGGCTTCTGGCGCTGTCCTGGGCACAGGATTGCAAGGTAGAGAACATCCAGGTCAAGCAGGATT
+TTGACAAAACCAGGTATGCAGGGACCTGGTATGCTGTGGGAAAGAAGGACCCAGAGGGATTGTTTTTACT
+TGACAACGTCGTAGCCCAGTTTAACATCGAGGATGATGGCAGAATGACCGCGACCGCAAAGGGCAGAGTC
+ATCATTCTGAACAACTGGGAAATGTGTGCCCACATGTTTGCTACCTTCGAGGGATCTACCGACCCTGCCA
+AGTTCAGGATGAAGTACTGGGGAGCGGCTTCATACCTGCAGACAGGGAATGACGAACACTGGGTTATCGA
+CACCGACTACGACAACTACGCCATCCACTACTCCTGCAGACTGCTCGACGCAGACGGCACGTGCTTGGAC
+AGCTACTCCTTCGTCTTCTCCCGTCACCCGACGGGCCTGAGGCCAGAGGACCAGGCCATCATCACGCAGA
+AGAAGATGGACCTCTGCCTTTTGGGCAAATACAGACGCGTAGCGCACAACGGTTTCTGCGAGAACAGTGC
+GACGCAGAGCCGCCTCAGTGACACCCTTCCTGATGCTCATATTTTCGTTCTGCTGCTTCAGATTGATCCA
+TCTCTCTCATCTACGTCTGTTCTCTCGAGAGAGAGTAGTCTTTCTTCGCTCTGCTATAAGTACACTACAC
+TCAAAAAAACATACACAAAACCTCGCAGGTATTCGCTTGACATAATCTACATCCTGAGTCA
+
+Translated the sequence using EMBOSS Transeq(EBI):
+CN976133.1_1 26058_125_035_F12 Fundulus Heteroclitus Liver Fundulus heteroclitus cDNA similar to Plasma retinol-binding protein I (PRBP-I), mRNA sequence
+CSGLLALSWAQDCKVENIQVKQDFDKTRYAGTWYAVGKKDPEGLFLLDNVVAQFNIEDDG
+RMTATAKGRVIILNNWEMCAHMFATFEGSTDPAKFRMKYWGAASYLQTGNDEHWVIDTDY
+DNYAIHYSCRLLDADGTCLDSYSFVFSRHPTGLRPEDQAIITQKKMDLCLLGKYRRVAHN
+GFCENSATQSRLSDTLPDAHIFVLLLQIDPSLSSTSVLSRESSLSSLCYKYTTLKKTYTK
+PRRYSLDIIYILSX
+
+Name: Fundulus heteroclitus liver cDNA
+Species: Fundulus heteroclitus
+Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi; Actinopterygii; Neopterygii; Teleostei; Neoteleostei;
+Acanthomorphata; Ovalentaria; Atherinomorphae; Cyprinodontiformes; Fundulidae; Fundulus.
+
+## Q4. 
+I have provided the blastp search results down below. The top match reported has 98.38% identity, so my protein is likely novel.
+
+```{r}
+knitr::include_graphics("Q4_1.png")
+```
+
+```{r}
+knitr::include_graphics("Q4_2.png")
+
+```
+
+```{r}
+knitr::include_graphics("Q4_3.png")
+
+```
+
+## Q5. 
+Renaming the FASTA sequences by species name for better organization.
+
+Original query protein:
+Human_RBP4 retinol-binding protein 4 isoform b [Homo sapiens]
+MNYSKIPAQVDLRRQTERDCRVSSFRVKENFDKARFSGTWYAMAKKDPEGLFLQDNIVAEFSVDETGQMSATAKGRVRLL
+NNWDVCADMVGTFTDTEDPAKFKMKYWGVASFLQKGNDDHWIVDTDYDTYAVQYSCRLLNLDGTCADSYSFVFSRDPNGL
+PPEAQKIVRQRQEELCLARQYRLIVHNGYCDGRSERNLL
+
+Novel protein:
+Fundulus_Heteroclitus 26058_125_035_F12 Fundulus Heteroclitus Liver Fundulus heteroclitus cDNA similar to Plasma retinol-binding protein I (PRBP-I), mRNA sequence
+CSGLLALSWAQDCKVENIQVKQDFDKTRYAGTWYAVGKKDPEGLFLLDNVVAQFNIEDDG
+RMTATAKGRVIILNNWEMCAHMFATFEGSTDPAKFRMKYWGAASYLQTGNDEHWVIDTDY
+DNYAIHYSCRLLDADGTCLDSYSFVFSRHPTGLRPEDQAIITQKKMDLCLLGKYRRVAHN
+GFCENSATQSRLSDTLPDAHIFVLLLQIDPSLSSTSVLSRESSLSSLCYKYTTLKKTYTK
+PRRYSLDIIYILSX
+
+**Group of other members of the family from different species**
+Species: rainbow smelt (taxid: 8014)
+Accession: EL528773.1
+Rainbow_smelt EST_omor_eva_7926 omoreva mixed_tissue Osmerus mordax cDNA Osmerus mordax cDNA clone omor_eva_507_157_rev 5', mRNA sequence
+QDCQVANIKVKENFDRNRYTGTWYAVAKKDPVGLFLLDNVVAQFKVEEGGKMTATAHGRV
+IILNNWEMCANMFGTFEDTPDPAKFKMRYWGAASYLQTGYDDHWVIDADHDNYAIHYSCR
+EIDTDGTCLDGYSFIFSRHSTGLRPEDQRIVTQKKQELCFLGKYRRVTHTGFCE
+
+Species: Atlantic salmon (taxid: 8030)
+Accession: CK895239.1
+Atlantic_salmon SGP154494 Atlantic salmon Swimbladder cDNA library Salmo salar cDNA clone SB7-0465 5', mRNA sequence
+QDCQVSNIQVMQNFDRSRYTGRWYAVAKKDPVGLFLLDNVVAQFSVDESGKMTATAHGRV
+IILNNWEMCANMFGTFEDTPDPAKFKMRYWGAASYLQTGNDDHWVIDTDYDNYAIHYSCR
+EVDLDGTCLDGYSFIFSRHPTGLRPEDQKIVTNKKKEICFLGKYRRVGHTGFCE
+
+
+Species: zebrafish (taxid: 7955)
+Accession:  BI563036.1
+Zebrafish fq75d01.y1 Zebrafish adult olfactory Danio rerio cDNA clone IMAGE:4886041 5' similar to TR:Q9PT95 Q9PT95 RETINOL BINDING PROTEIN, mRNA sequence
+QDCQVSNFAVQQDFNRTRYQGTWYAVAKKDPVGLFLLDNIVANFKVEEDGTMTATAIGRV
+IILNNWEMCANMFGTFEDTEDPAKFKMKYWGAAAYLQTGYDDHWIIDTDYDNYAIHYSCR
+ELDEDGTCLDGYSFIFSRHPDGLRPEDQAIVTQKKQDICFLGKYRRVAHTGFCEA
+
+Species: catfishes (taxid: 7995)
+Accession:  AGS58251.1
+Catfishes retinol-binding protein [Clarias batrachus]
+MLRLCIALCVLATCWAQDCLVSNITVKQDFDRMRYQGTWYAVAKKDPVGLFLLDNIVASFKVEEDGTMTA
+TAIGRVIILNNWEMCANMFGTFEDTEDPARFKMKYWGAAAYLQTGYDDHWIIDTDYDNYAIHYSCRELDE
+DGTCLDGYSFIFSRHPDGLRPEDQKNVTEKKQEICFLGKYRRVSHTGFCDAA
+
+Species: eels (taxid: 7933)
+Accession:   XP_035263012.1
+Eels retinol-binding protein 4 [Anguilla anguilla]
+MFRVLALLCVLATCWAQDCTVSNFQVMKNFDRQRYTGTWYAVAKKDPVGLFLLDNIVAEFAMEADGSMTA
+KAKGRVIILNNWELCANMFATFEDSTDPAKFKMKYWGAATYLQSGNDDHWVIDTDYDNYAIHYSCRQLDT
+DGTCLDSYSFIFSRHPNGLRPEDQKIVTQRKQELCLLGKYRRVSHNGYCDGN
+
+**Alignment obtained using MUSCLE (version 3.8) at EBI**:
+
+```{r}
+knitr::include_graphics("Q5_1.png")
+```
+
+## Q6.
+Creating a phylogenetic tree using the "Simple Phylogeny" feature online from the EBI.
+
+```{r}
+knitr::include_graphics("Q6_1.png")
+```
+
+## Q7.
+After reading the muscle alignment file into Seaview and saving the file as FASTA:
+
+```{r}
+library(bio3d)
+```
+
+Generating a heatmap:
+
+```{r}
+muscle_al <- read.fasta("bioinfproj")
+
+identity <- seqidentity(muscle_al)
+
+heatmap(identity, margins = c(9, 9), cexRow = 0.7, cexCol = 0.7)
+```
+
+## Q8.
+First calculating the sum of each row in the identity matrix to determine which sequence has the highest identity in the alignment:
+
+```{r}
+sums <- rowSums(identity)
+which.max(sums)
+```
+
+In the main protein structure database, using the original sequence to search for the most similar atomic resolution structure to the aligned sequences.
+
+```{r}
+zebra_rbp <- read.fasta("sequence.fasta")
+
+hits <- blast.pdb(zebra_rbp, database = "pdb")
+```
+
+```{r}
+head(hits, 3)
+```
+
+The top 3 **unique** hits are 4O9S_A, 3FMZ_A, and 6QBA_A.
+Saving these to a new dataframe:
+
+```{r}
+top_3 <- hits$hit.tbl[1:3,]
+annotate <- pdb.annotate(top_3$subjectids)
+```
+
+```{r}
+top_annotate <- merge(top_3, annotate, by.x = "subjectids", by.y = "row.names")
+```
+
+```{r}
+relevant_colnames <- c("subjectids", "alignmentlength", "positives", "evalue", "identity")
+x <- match(relevant_colnames, colnames(top_annotate))
+top_anno_relevant <- top_annotate[,x]
+```
+
+Viewing the most relevant columns from the top hits:
+
+```{r}
+top_anno_relevant
+```
+
+## Q9.
+Generating a molecular figure of one of the identified PDB structures using **VMD**.
+
+```{r}
+knitr::include_graphics("Q9_1.png")
+```
+
+The zebrafish structure is likely very similar to the novel protein due to the 95% identity.
+
+## Q10.
+In my CHEMBL search, I entered my novel protein sequence. There were 5127 binding assay results and 1,056 functional assay results.
+
+[CHEMBL3100]:https://www.ebi.ac.uk/chembl/target_report_card/CHEMBL3100/
