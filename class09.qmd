@@ -1,0 +1,44 @@
+---
+title: "Class 09 Lab: Structural Bioinformatics"
+author: "Kira Jung"
+format: pdf
+---
+
+Loading the data export summary from the PDB site.
+
+```{r}
+pdb <- read.csv("Data Export Summary.csv")
+pdb
+```
+
+## Question 1.
+The percentage of structures in the PDB solved by X-Ray and Electron Microscopy is 93.0%. 
+
+```{r}
+pdb_X.ray <- gsub(",", "", pdb$X.ray)
+pdb_EM <- gsub(",", "", pdb$EM)
+pdb_Total <- gsub(",", "", pdb$Total)
+(sum(as.numeric(pdb_X.ray)) + sum(as.numeric(pdb_EM))) / sum(as.numeric(pdb_Total))
+```
+
+## Question 2.
+The proportion of structures in the PDB that are protein is 86.8%
+
+```{r}
+as.numeric(pdb_Total[1]) / sum(as.numeric(pdb_Total))
+```
+
+## Question 3.
+There are 1,294 structures 
+
+## PDB format
+Viewing the PDB file (on the website) for the HIV-1 protease structure with the PDB identifier 1HSG.
+
+# 2. Visualizing the HIV-1 protease structure
+
+```{r}
+library("png")
+1HSG <- readPNG("1HSG (2).png")
+```
+
+
