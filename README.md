@@ -9,7 +9,7 @@ This is my repository for my Bioinformatics class from UC San Diego in SP23.
 - Class 6 - [R Functions](Class06Lab/Class06LabQuarto.Rmd)
 - Class 7 - [Hands on with Principal Component Analysis (PCA)]
 - Class 8 - [Learning Analysis of Human Breast Cancer Cells (PCA)]
-- Class 9 - [Structural Bioinformatics, PDB, PCA]
+- Class 9 - [Structural Bioinformatics, PDB, PCA](https://github.com/kirajung/bimm143_kira_sp23/blob/b796766e8598a6232163f8f0bc342161b41955e9/class09.qmd)
 - Class 10 - [Exploratory Analysis of Halloween Candy in R]
 - Class 11 - [Introduction to Genome Informatics Lab](https://github.com/kirajung/bimm143_kira_sp23/blob/4cb8020be1e57877bbd6c4682362b5b17d1138d9/lab11/lab11.Rmd)
 - Class 12 - [Transcriptomics and the Analysis of RNA-Seq Data]
